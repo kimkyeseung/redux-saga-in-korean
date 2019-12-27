@@ -159,8 +159,9 @@ function render() {
 <!--Add the following code to the `sagas.js` module:-->
 
 ```javascript
-import { delay } from 'redux-saga'
 import { put, takeEvery } from 'redux-saga/effects'
+
+const delay = (ms) => new Promise(res => setTimeout(res, ms))
 
 // worker Saga: 비동기 증가 태스크를 수행할겁니다.
 export function* incrementAsync() {
@@ -177,7 +178,7 @@ export function* watchIncrementAsync() {
 설명할 때가 왔군요.
 <!--Time for some explanations.-->
 
-`delay` 라는 유틸리티 함수를 임포트 했는데요, 이 함수는 설정된 시간 이후에 resolve 를 하는 [Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise) 객체를 리턴합니다. 우리는 이 함수를 제너레이터를 *정지* 하는데 사용할겁니다.
+`delay` 라는 유틸리티 함수를 제작했는데요, 이 함수는 설정된 시간 이후에 resolve 를 하는 [Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise) 객체를 리턴합니다. 우리는 이 함수를 제너레이터를 *정지* 하는데 사용할겁니다.
 
 <!--We import `delay`, a utility function that returns a [Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise) that will resolve after a specified number of milliseconds. We'll use this function to *block* the Generator.-->
 
@@ -318,8 +319,9 @@ on Promises. If `delay` returned a *normal* value, things would've been easier t
 
 ```javascript
 // ...
-import { delay } from 'redux-saga'
 import { put, call, takeEvery } from 'redux-saga/effects'
+
+const delay = (ms) => new Promise(res => setTimeout(res, ms))
 
 export function* incrementAsync() {
   // use the call Effect
